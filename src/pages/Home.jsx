@@ -1,5 +1,4 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
-import { Link } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import { flavors } from '../data'
 import Bubbles from '../components/Bubbles'
@@ -18,7 +17,7 @@ const extrude = (shade) =>
   Array.from({ length: 14 }, (_, i) => `${(i + 1) * 0.8}px ${(i + 1) * 1}px 0 ${shade}`).join(',') +
   ',0 28px 40px rgba(0,0,0,.28)'
 
-export default function Home() {
+export default function Home({ onOrderFlavor }) {
   const [st, setSt] = useState({ index: 0, prev: -1, dir: 1 })
   const mouse = useRef({ x: 0, y: 0 })
   const startX = useRef(null)
@@ -63,6 +62,7 @@ export default function Home() {
   return (
     <motion.section
       className="hero"
+      id="home"
       onPointerMove={onMove}
       onPointerDown={onDown}
       onPointerUp={onUp}
@@ -115,9 +115,13 @@ export default function Home() {
             <p>{flavor.desc}</p>
           </motion.div>
         </AnimatePresence>
-        <Link to="/contact" state={{ flavor: flavor.id }} className="btn">
+        <button
+          type="button"
+          onClick={() => onOrderFlavor?.(flavor.id)}
+          className="btn"
+        >
           Order this flavor
-        </Link>
+        </button>
       </div>
 
       <div className="hero-price glass" aria-live="polite">
