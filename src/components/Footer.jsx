@@ -34,6 +34,7 @@ export default function Footer({ onNavigate }) {
           <h3>Quick Links</h3>
           <a href="#home" onClick={handleLink('home')}>Home</a>
           <a href="#flavors" onClick={handleLink('flavors')}>Flavors</a>
+          <a href="#reviews" onClick={handleLink('reviews')}>Reviews &amp; Ratings</a>
           <a href="#about" onClick={handleLink('about')}>About Us</a>
           <a href="#contact" onClick={handleLink('contact')}>Order &amp; Contact</a>
         </nav>

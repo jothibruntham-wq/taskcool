@@ -4,6 +4,7 @@ import Navbar from './components/Navbar'
 import Footer from './components/Footer'
 import Home from './pages/Home'
 import Flavors from './pages/Flavors'
+import Reviews from './pages/Reviews'
 import About from './pages/About'
 import Contact from './pages/Contact'
 import { flavors } from './data'
@@ -31,10 +32,14 @@ export default function App() {
     scrollToSection('contact')
   }, [scrollToSection])
 
-  // Handle route matching or hash jumps (e.g. visiting /flavors, /about, /contact directly)
+  const handleScrollToReviews = useCallback(() => {
+    scrollToSection('reviews')
+  }, [scrollToSection])
+
+  // Handle route matching or hash jumps (e.g. visiting /flavors, /reviews, /about, /contact directly)
   useEffect(() => {
     const rawPath = location.pathname.replace('/', '')
-    if (rawPath && ['flavors', 'about', 'contact'].includes(rawPath)) {
+    if (rawPath && ['flavors', 'reviews', 'about', 'contact'].includes(rawPath)) {
       setTimeout(() => scrollToSection(rawPath), 150)
     } else if (location.hash) {
       const id = location.hash.replace('#', '')
@@ -45,7 +50,7 @@ export default function App() {
   // Track active section on scroll for navbar active pill indicator
   useEffect(() => {
     const handleScroll = () => {
-      const sections = ['home', 'flavors', 'about', 'contact']
+      const sections = ['home', 'flavors', 'reviews', 'about', 'contact']
       const scrollPosition = window.scrollY + 240
 
       for (let i = sections.length - 1; i >= 0; i--) {
@@ -69,9 +74,16 @@ export default function App() {
     <div className="landing-wrapper">
       <Navbar activeSection={activeSection} onNavigate={scrollToSection} />
       <main>
-        <Home onOrderFlavor={handleOrderFlavor} />
+        <Home
+          onOrderFlavor={handleOrderFlavor}
+          onScrollToReviews={handleScrollToReviews}
+        />
         <div className="landing-content">
-          <Flavors onOrderFlavor={handleOrderFlavor} />
+          <Flavors
+            onOrderFlavor={handleOrderFlavor}
+            onScrollToReviews={handleScrollToReviews}
+          />
+          <Reviews onOrderFlavor={handleOrderFlavor} />
           <About />
           <Contact
             selectedFlavor={selectedFlavor}

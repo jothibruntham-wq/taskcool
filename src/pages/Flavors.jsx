@@ -3,7 +3,7 @@ import { motion } from 'framer-motion'
 import { flavors } from '../data'
 import { drawLabel } from '../canLabel'
 
-export default function Flavors({ onOrderFlavor }) {
+export default function Flavors({ onOrderFlavor, onScrollToReviews }) {
   const images = useMemo(() => flavors.map((f) => drawLabel(f).toDataURL('image/png')), [])
 
   return (
@@ -23,7 +23,18 @@ export default function Flavors({ onOrderFlavor }) {
               transition={{ type: 'spring', stiffness: 300, damping: 20 }}
             >
               <img className="card-img" src={images[i]} alt={`${f.name} can label`} loading="lazy" />
-              <h3>{f.name}</h3>
+              <div className="card-header-row">
+                <h3>{f.name}</h3>
+                <div
+                  className="card-rating-badge"
+                  onClick={() => onScrollToReviews?.()}
+                  title="View reviews"
+                >
+                  <span className="card-star">★</span>
+                  <span className="card-score">{f.rating}</span>
+                  <span className="card-reviews-count">({f.reviewsCount})</span>
+                </div>
+              </div>
               <p>{f.desc}</p>
               <ul className="chips">
                 {f.notes.map((n) => (

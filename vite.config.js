@@ -25,5 +25,7 @@ export default defineConfig({
       },
     },
   },
+  base:"/taskcool/",
 })
+
 

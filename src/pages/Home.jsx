@@ -17,7 +17,7 @@ const extrude = (shade) =>
   Array.from({ length: 14 }, (_, i) => `${(i + 1) * 0.8}px ${(i + 1) * 1}px 0 ${shade}`).join(',') +
   ',0 28px 40px rgba(0,0,0,.28)'
 
-export default function Home({ onOrderFlavor }) {
+export default function Home({ onOrderFlavor, onScrollToReviews }) {
   const [st, setSt] = useState({ index: 0, prev: -1, dir: 1 })
   const mouse = useRef({ x: 0, y: 0 })
   const startX = useRef(null)
@@ -112,6 +112,15 @@ export default function Home({ onOrderFlavor }) {
             transition={{ duration: 0.3 }}
           >
             <h2>{flavor.name}</h2>
+            <div
+              className="hero-rating-pill"
+              onClick={onScrollToReviews}
+              title="View customer reviews"
+            >
+              <span className="hero-rating-stars">★★★★★</span>
+              <span className="hero-rating-score">{flavor.rating || 4.9}</span>
+              <span className="hero-rating-count">({flavor.reviewsCount || 380}+)</span>
+            </div>
             <p>{flavor.desc}</p>
           </motion.div>
         </AnimatePresence>
